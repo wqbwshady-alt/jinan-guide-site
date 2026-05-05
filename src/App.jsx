@@ -216,6 +216,9 @@ export default function App() {
             <p style={{ marginTop: "12px", color: "#666" }}>
   也可以直接添加微信：a18959092768
 </p>
+<p>✔ 本地真实陪同，无套路</p>
+<p>✔ 可提前沟通行程</p>
+<p>✔ 不满意不收费</p>
           </div>
         </section>
       </main>
