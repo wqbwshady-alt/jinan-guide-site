@@ -1,4 +1,26 @@
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
 export default function App() {
+  const formRef = useRef(null);
+
+const sendBooking = (e) => {
+  e.preventDefault();
+
+  emailjs
+    .sendForm("service_baoq08c", "template_ma7wk7q", formRef.current, {
+      publicKey: "4h7n5iqrH3FIv_Xxo",
+    })
+    .then(
+      () => {
+        alert("预约提交成功，我会尽快联系你！");
+        formRef.current.reset();
+      },
+      (error) => {
+        alert("提交失败，请重试");
+        console.error(error);
+      }
+    );
+};
   const services = [
     { title: "半日陪同", desc: "第一次来济南、周末轻松逛、城市打卡", price: "¥299 起" },
     { title: "城市陪拍", desc: "情侣打卡、女生出片、探店拍照", price: "¥199 起" },
@@ -181,29 +203,33 @@ export default function App() {
         }}>
           <h2 style={{ fontSize: "36px" }}>预约你的济南陪同</h2>
           <p style={{ color: "#666" }}>留下你的时间、人数和想法，我们会先联系你确认需求。</p>
-
-          <div style={{ display: "grid", gap: "14px", marginTop: "24px" }}>
-            <input placeholder="怎么称呼你" style={inputStyle} />
-            <input placeholder="联系方式（微信 / 手机）" style={inputStyle} />
-            <input type="date" style={inputStyle} />
-            <select style={inputStyle}>
+<form
+  ref={formRef}
+  onSubmit={sendBooking}
+  style={{ display: "grid", gap: "14px", marginTop: "24px" }}
+>
+           <input name="name" placeholder="怎么称呼你" style={inputStyle} />
+<input name="contact" placeholder="联系方式（微信 / 手机）" style={inputStyle} />
+<input name="date" type="date" style={inputStyle} />
+<select name="people" style={inputStyle}>
               <option>1 人</option>
               <option>2 人</option>
               <option>3-4 人</option>
               <option>5 人以上</option>
             </select>
-            <select style={inputStyle}>
+            <select name="service" style={inputStyle}>
               <option>半日陪同</option>
               <option>城市陪拍</option>
               <option>接站陪同</option>
               <option>本地搭子</option>
             </select>
-            <textarea
-              rows="4"
-              placeholder="你想怎么玩？例如：大明湖 + 宽厚里 + 拍照"
-              style={inputStyle}
-            />
-            <button style={{
+          <textarea
+  name="message"
+  rows="4"
+  placeholder="你想怎么玩？例如：大明湖 + 宽厚里 + 拍照"
+  style={inputStyle}
+/>
+<button type="submit" style={{
               padding: "15px",
               borderRadius: "16px",
               background: "#111",
@@ -219,7 +245,7 @@ export default function App() {
 <p>✔ 本地真实陪同，无套路</p>
 <p>✔ 可提前沟通行程</p>
 <p>✔ 不满意不收费</p>
-          </div>
+        </form>
         </section>
       </main>
 
